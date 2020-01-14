@@ -62,7 +62,7 @@ Gattrs <- getDefaultAttrs(curAttrs = list(), layoutType = "dot")
 Gattrs$graph$margin <- c(0.01,0.01)
 # Gattrs$graph$size <- c(10,7)
 # Gattrs$graph$rotate <- 90
-Gattrs$node$fontsize <- 12
+Gattrs$node$fontsize <- 8
 Gattrs$node$shape <- 'rect'
 Gattrs$node$fillcolor <- '#C5CCFF'
 Gattrs$node$color <- 'transparent'
@@ -71,17 +71,17 @@ Gattrs$edge$weight <- 2
 Gattrs$edge$arrowsize <- 0.5
 Gattrs$graph$rankdir <- "TB"
 
-nAttrs$height <- c(1.8, # Total Screen 1
-                   1.8, # Screen 1 Pre-Eligible
-                   1.8, # Screen 2
-                   1.8, # Baseline
-                   1.8) # Screen 1 Ineligible
+nAttrs$height <- c(1.1, # Total Screen 1
+                   1.1, # Screen 1 Pre-Eligible
+                   1.1, # Screen 2
+                   1.1, # Baseline
+                   1.1) # Screen 1 Ineligible
 
-nAttrs$width <- c(4.8, # Total Screen 1
-                  4.8, # Screen 1 Pre-Eligible
-                  4.8, # Screen 2
-                  4.8, # Baseline
-                  4.8) # Screen 1 Ineligible
+nAttrs$width <- c(2.8, # Total Screen 1
+                  2.8, # Screen 1 Pre-Eligible
+                  2.8, # Screen 2
+                  2.8, # Baseline
+                  2.8) # Screen 1 Ineligible
 
 names(nAttrs$height) <- names(nodes)
 names(nAttrs$width) <- names(nodes)
