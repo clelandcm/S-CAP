@@ -1,0 +1,92 @@
+---
+title: "S-CAP Weekly Report"
+author: "Last Updated"
+date: '`r format(Sys.time(), "%B %d, %Y %r %Z")`'
+output:
+  html_document:
+    highlight: tango
+    theme: spacelab
+    toc: yes
+    toc_depth: 5
+  word_document:
+    toc: yes
+    toc_depth: '5'
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, comment=NA, fig.width = 6, fig.asp = 0.618, out.width = "80%", fig.align = "center", dev='svg')
+```
+
+```{r}
+library(openxlsx)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(DiagrammeR)
+library(ggthemes)
+library(scales)
+library(DiagrammeRsvg)
+library(svglite)
+library(rsvg)
+library(png)
+library(XML)
+library(data.table)
+```
+
+```{r}
+SCAP <- read.csv("c:/chuck/NYU/Gwadz/SCAP/SCAPMainProject_DATA_2020-01-14_0656.csv")
+```
+
+```{r, fig.width = 10, fig.asp = 0.7, out.width = "100%"}
+library(graph)
+library(Rgraphviz)
+
+cg.A <- paste("Total Screen 1", "\\\nn=", sum(!is.na(SCAP$scr1_eligible)), sep = "")
+cg.B <- paste("Pre-Eligible", "\\\nn=", sum(SCAP$scr1_eligible == 1, na.rm = TRUE), sep = "")
+cg.C <- paste("Ineligble", "\\\nn=", sum(SCAP$scr1_eligible == 0, na.rm = TRUE), sep = "")
+cg.D <- paste("Total Screen 2", "\\\nn=", sum(!is.na(SCAP$screen_2_interview_complete)), sep = "")
+cg.E <- paste("Baseline", "\\\nn=", sum(SCAP$baseline_interview_complete == 2, na.rm = TRUE), sep = "")
+
+consort.graph <- ftM2graphNEL(matrix(c(cg.A,cg.A,cg.B,cg.D, 
+                                       cg.B,cg.C,cg.D,cg.E), ncol = 2),
+                              edgemode="directed")
+
+edges <- buildEdgeList(consort.graph)
+nodes <- buildNodeList(consort.graph)
+
+nAttrs <- list()
+eAttrs <- list()
+
+Gattrs <- getDefaultAttrs(curAttrs = list(), layoutType = "dot")
+Gattrs$graph$margin <- c(0.01,0.01)
+# Gattrs$graph$size <- c(10,7)
+# Gattrs$graph$rotate <- 90
+Gattrs$node$fontsize <- 12
+Gattrs$node$shape <- 'rect'
+Gattrs$node$fillcolor <- '#C5CCFF'
+Gattrs$node$color <- 'transparent'
+Gattrs$node$fixedsize <- FALSE
+Gattrs$edge$weight <- 2
+Gattrs$edge$arrowsize <- 0.5
+Gattrs$graph$rankdir <- "TB"
+
+nAttrs$height <- c(1.8, # Total Screen 1
+                   1.8, # Screen 1 Pre-Eligible
+                   1.8, # Screen 2
+                   1.8, # Baseline
+                   1.8) # Screen 1 Ineligible
+
+nAttrs$width <- c(4.8, # Total Screen 1
+                  4.8, # Screen 1 Pre-Eligible
+                  4.8, # Screen 2
+                  4.8, # Baseline
+                  4.8) # Screen 1 Ineligible
+
+names(nAttrs$height) <- names(nodes)
+names(nAttrs$width) <- names(nodes)
+
+plot(consort.graph, attrs = Gattrs, edgeAttrs = eAttrs, nodeAttrs = nAttrs)
+```
+
+
