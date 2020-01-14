@@ -1,0 +1,10 @@
+---
+title: ""
+output:
+  html_document:
+    theme: flatly
+---
+
+```{r, echo=FALSE, out.width = "400px", fig.align='center'}
+knitr::include_graphics("C:/Dbox/chuck/NYU/gwadz/SCAP/logo.png")
+```
