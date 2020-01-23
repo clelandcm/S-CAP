@@ -35,7 +35,7 @@ library(data.table)
 ```
 
 ```{r}
-SCAP <- read.csv("c:/chuck/NYU/Gwadz/SCAP/SCAPMainProject_DATA_2020-01-14_0656.csv")
+SCAP <- read.csv("c:/chuck/NYU/Gwadz/SCAP/SCAPMainProject_DATA_2020-01-23_1206.csv")
 ```
 
 ```{r, fig.width = 10, fig.asp = 0.7, out.width = "100%"}
@@ -88,5 +88,10 @@ names(nAttrs$width) <- names(nodes)
 
 plot(consort.graph, attrs = Gattrs, edgeAttrs = eAttrs, nodeAttrs = nAttrs)
 ```
+
+```{r,eval=FALSE}
+table1::table1(~ soc_q_1 + soc_q_2, data = SCAP)
+```
+
 
 
