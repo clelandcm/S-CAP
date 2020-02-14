@@ -32,21 +32,25 @@ library(rsvg)
 library(png)
 library(XML)
 library(data.table)
+library(table1)
 ```
 
 ```{r}
-SCAP <- read.csv("c:/chuck/NYU/Gwadz/SCAP/SCAPMainProject_DATA_2020-01-23_1206.csv")
+load("h:/scap/scap.Rdata")
+
+setDT(scap)
 ```
 
+# CONSORT
 ```{r, fig.width = 10, fig.asp = 0.7, out.width = "100%"}
 library(graph)
 library(Rgraphviz)
 
-cg.A <- paste("Total Screen 1", "\\\nn=", sum(!is.na(SCAP$scr1_eligible)), sep = "")
-cg.B <- paste("Pre-Eligible", "\\\nn=", sum(SCAP$scr1_eligible == 1, na.rm = TRUE), sep = "")
-cg.C <- paste("Ineligble", "\\\nn=", sum(SCAP$scr1_eligible == 0, na.rm = TRUE), sep = "")
-cg.D <- paste("Total Screen 2", "\\\nn=", sum(!is.na(SCAP$screen_2_interview_complete)), sep = "")
-cg.E <- paste("Baseline", "\\\nn=", sum(SCAP$baseline_interview_complete == 2, na.rm = TRUE), sep = "")
+cg.A <- paste("Total Screen 1", "\\\nn=", sum(!is.na(scap$scr1_eligible)), sep = "")
+cg.B <- paste("Pre-Eligible", "\\\nn=", sum(scap$scr1_eligible == "Eligible", na.rm = TRUE), sep = "")
+cg.C <- paste("Ineligble", "\\\nn=", sum(scap$scr1_eligible == "Ineligible", na.rm = TRUE), sep = "")
+cg.D <- paste("Total Screen 2", "\\\nn=", sum(!is.na(scap$screen_2_interview_complete)), sep = "")
+cg.E <- paste("Baseline", "\\\nn=", sum(scap$baseline_interview_complete == "Complete", na.rm = TRUE), sep = "")
 
 consort.graph <- ftM2graphNEL(matrix(c(cg.A,cg.A,cg.B,cg.D, 
                                        cg.B,cg.C,cg.D,cg.E), ncol = 2),
@@ -89,8 +93,32 @@ names(nAttrs$width) <- names(nodes)
 plot(consort.graph, attrs = Gattrs, edgeAttrs = eAttrs, nodeAttrs = nAttrs)
 ```
 
-```{r,eval=FALSE}
-table1::table1(~ soc_q_1 + soc_q_2, data = SCAP)
+# Screening
+## First Stage
+```{r}
+table1( ~ ., data = scap[redcap_event_name == "screen_1_arm_1" & screen_1_interview_complete == "Complete", 
+                         .(scr1_prescr_consent, scr1_auto_age, scr1_gender, 
+                             scr1_genother, scr1_race___c,
+                             scr1_ethnicity, scr1_live, 
+                             scr1_recruited, scr1_lang, scr1_hivstat, 
+                             scr1_incentiveprgm)])
+```
+
+## Second Stage
+```{r}
+table1( ~ ., data = scap[redcap_event_name == "screen_2_arm_1", 
+                         .(scr2_labtype, scr2_cd4level, scr2_cd8level,
+                           scr2_cd8_cd4ratio, scr2_vlvalue, scr2_vlundect)])
+```
+
+# Baseline
+```{r}
+table1::table1( ~ ., data = scap[redcap_event_name == "baseline_arm_1",
+                               .(bl_sexatbirth, bl_sexor, bl_birthplace,
+                                 bl_education, bl_income, bl_cemp,
+                                 bl_healthinsur_1, bl_livingsit_1,
+                                 bl_homeless_nhbs_1, bl_homeless_nhbs_2,
+                                 bl_homeless_nhbs_3)])
 ```
 
 
