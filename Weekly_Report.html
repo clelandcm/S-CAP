@@ -213,6 +213,22 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 <style type="text/css">.Rtable1 table, table.Rtable1 {font-family: "Arial", Arial, sans-serif;font-size: 10pt;border-collapse: collapse;padding: 0px;margin: 0px;}.Rtable1 td {white-space:nowrap;}.Rtable1 th, .Rtable1 td {border: 0;text-align: center;padding: 0.5ex 1.5ex;margin: 0px;}.Rtable1 thead>tr:first-child>th {border-top: 2pt solid black;}.Rtable1 thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1 tbody>tr:last-child>td {border-bottom: 2pt solid black;}.Rtable1 th.grouplabel {padding-left: 0;padding-right: 0;}.Rtable1 th.grouplabel>div {margin-left: 1.5ex;margin-right: 1.5ex;border-bottom: 1pt solid black;}.Rtable1 th.grouplabel:last-child>div {margin-right: 0;}.Rtable1 .rowlabel {text-align: left;padding-left: 2.5ex;}.Rtable1 .firstrow.rowlabel {padding-left: 0.5ex;font-weight: bold;}.Rtable1-zebra tbody tr:nth-child(odd) {background-color: #eee;}table.Rtable1-times {font-family: "Times New Roman", Times, serif;}.Rtable1-shade th {background-color: #ccc;}.Rtable1-grid th, .Rtable1-grid td {border-left: 1pt solid black;border-right: 1pt solid black;}.Rtable1-grid thead>tr:first-child>th {border-top: 1pt solid black;}.Rtable1-grid thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1-grid tbody>tr:last-child>td {border-bottom: 1pt solid black;}.Rtable1-grid .firstrow, .Rtable1-grid .firstrow ~ td {border-top: 1pt solid black;}.Rtable1-grid th.grouplabel>div {margin-left: 0;margin-right: 0;border-bottom: 0;}.Rtable1-center td.rowlabel, .Rtable1-center td.firstrow.rowlabel {font-weight: bold;text-align: center;padding: 0.5ex 1.5ex;}.Rtable1-footnote {font-size: smaller;padding: 0px;margin: 0px;}</style>
 
 
@@ -355,7 +371,7 @@ summary {
 
 <h1 class="title toc-ignore">S-CAP Weekly Report</h1>
 <h4 class="author">Last Updated</h4>
-<h4 class="date">July 10, 2020 06:08:05 PM EDT</h4>
+<h4 class="date">July 13, 2020 05:18:18 PM EDT</h4>
 
 </div>
 
@@ -3977,7 +3993,17 @@ summary {
 </div>
 <div id="categories" class="section level4">
 <h4>Categories</h4>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="22%"></col>
+<col width="10%"></col>
+<col width="12%"></col>
+<col width="12%"></col>
+<col width="14%"></col>
+<col width="9%"></col>
+<col width="11%"></col>
+<col width="7%"></col>
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Substance</th>
@@ -5765,33 +5791,33 @@ summary {
 <div id="connor-davidson-resilience-scale-cd-risc-0-40" class="section level1">
 <h1>Connor-Davidson Resilience Scale (CD-RISC) (0-40)</h1>
 <ul>
-<li><p>Campbell-Sills, L., &amp; Stein, M. B. (2007). Psychometric analysis and refinement of the connor-davidson resilience scale (CD-RISC): Validation of a 10-item measure of resilience. <em>Journal of traumatic stress</em>, 20(6), 1019-1028.</p></li>
-<li><p>Connor, K. M., &amp; Davidson, J. R. (2003). Development of a new resilience scale: The Connor-Davidson resilience scale (CD-RISC). <em>Depression and anxiety</em>, 18(2), 76-82.</p>
+<li>Campbell-Sills, L., &amp; Stein, M. B. (2007). Psychometric analysis and refinement of the connor-davidson resilience scale (CD-RISC): Validation of a 10-item measure of resilience. <em>Journal of traumatic stress</em>, 20(6), 1019-1028.</li>
+<li>Connor, K. M., &amp; Davidson, J. R. (2003). Development of a new resilience scale: The Connor-Davidson resilience scale (CD-RISC). <em>Depression and anxiety</em>, 18(2), 76-82.</li>
+</ul>
 <table>
 <thead>
 <tr class="header">
-<th align="left">n</th>
-<th align="left">Mean</th>
-<th align="right">sd M</th>
-<th align="left">edian</th>
-<th align="right">IQR M</th>
-<th>in M</th>
-<th align="left">ax</th>
+<th align="right">n</th>
+<th align="right">Mean</th>
+<th align="right">sd</th>
+<th align="right">Median</th>
+<th align="right">IQR</th>
+<th align="right">Min</th>
+<th align="right">Max</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">36</td>
-<td align="left">29.66</td>
+<td align="right">36</td>
+<td align="right">29.66</td>
 <td align="right">7.01</td>
-<td align="left">31</td>
+<td align="right">31</td>
 <td align="right">10.69</td>
-<td>15</td>
-<td align="left">40</td>
+<td align="right">15</td>
+<td align="right">40</td>
 </tr>
 </tbody>
-</table></li>
-</ul>
+</table>
 <p>Coefficient Alpha</p>
 <ul>
 <li><p><strong>total</strong>:</p>
